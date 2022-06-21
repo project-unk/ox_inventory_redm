@@ -1,0 +1,11 @@
+{
+  "language": "English",
+  "ui": {
+    "settings": {
+      "title": "Settings",
+      "language": "Language"
+    },
+    "close": "Close",
+    "confirm": "Confirm"
+  }
+}

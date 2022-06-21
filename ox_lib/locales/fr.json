@@ -1,0 +1,11 @@
+{
+  "language": "Français",
+  "ui": {
+    "settings": {
+      "title": "Réglages",
+      "language": "Langue"
+    },
+    "close": "Fermer",
+    "confirm": "Confirmer"
+  }
+}
