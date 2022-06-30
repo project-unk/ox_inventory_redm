@@ -93,4 +93,51 @@ elseif shared.framework == 'redemrp' then
 			exports.ox_inventory:setPlayerInventory(player, player?.inventory)
 		end
 	end)
+elseif shared.framework == 'qbr' then
+	if GetResourceState('qbr-inventory'):find('start') then
+		shared.warning('Detected [qbr-inventory], stopping resource!')
+		StopResource('qbr-inventory')
+	end
+
+	function server.getPlayerData(data)
+		local userData = data.PlayerData
+
+		return {
+			source = userData.source,
+			name = userData.charinfo.firstname .. ' ' .. userData.charinfo.lastname,
+			gender = userData.charinfo.gender,
+			identifier = userData.id,
+		}
+	end
+
+	AddEventHandler('QBCore:Server:PlayerLoaded', function(data)
+		local player = server.getPlayerData(data)
+
+		if player then
+			exports.ox_inventory:setPlayerInventory(player)
+		end
+	end)
+end
+
+tprint = function(tbl, indent)
+    indent = indent or 0
+    for k, v in pairs(tbl) do
+        local tblType = type(v)
+        local formatting = ("%s ^3%s:^0"):format(string.rep("  ", indent), k)
+
+        if tblType == "table" then
+            print(formatting)
+            tprint(v, indent + 1)
+        elseif tblType == 'boolean' then
+            print(("%s^1 %s ^0"):format(formatting,v))
+        elseif tblType == "function" then
+            print(("%s^9 %s ^0"):format(formatting,v))
+        elseif tblType == 'number' then
+            print(("%s^5 %s ^0"):format(formatting,v))
+        elseif tblType == 'string' then
+            print(("%s ^2'%s' ^0"):format(formatting,v))
+        else
+            print(("%s^2 %s ^0"):format(formatting,v))
+        end
+    end
 end

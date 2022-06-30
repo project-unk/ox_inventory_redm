@@ -5,6 +5,12 @@ return {
 
 	['water'] = {
 		label = 'Water',
+		weight = 1,
+        stack = false,
+        close = false,
+        client = {
+            usetime = 2500,
+        }
 	},
 
 	['bread'] = {

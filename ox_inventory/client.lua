@@ -477,6 +477,21 @@ local function registerCommands()
 		end
 	end)
 
+	RegisterCommand('hotbar', function()
+		if not client.weaponWheel and not IsPauseMenuActive() then
+			SendNUIMessage({ action = 'toggleHotbar' })
+		end
+	end)
+
+	TriggerEvent('chat:removeSuggestion', '/hotbar')
+
+	for i = 1, 5 do
+		local hotkey = ('hotkey%s'):format(i)
+		RegisterCommand(hotkey, function() if not invOpen then useSlot(i) end end)
+		RegisterKeyMapping(hotkey, shared.locale('use_hotbar', i), 'keyboard', i)
+		TriggerEvent('chat:removeSuggestion', '/'..hotkey)
+	end
+
 	if shared.gameVersion == 'fivem' then
 		RegisterKeyMapping('inv', shared.locale('open_player_inventory'), 'keyboard', client.keys[1])
 		TriggerEvent('chat:removeSuggestion', '/inv')
@@ -616,25 +631,11 @@ local function registerCommands()
 		RegisterKeyMapping('reload', shared.locale('reload_weapon'), 'keyboard', 'r')
 		TriggerEvent('chat:removeSuggestion', '/reload')
 
-		RegisterCommand('hotbar', function()
-			if not client.weaponWheel and not IsPauseMenuActive() then
-				SendNUIMessage({ action = 'toggleHotbar' })
-			end
-		end)
 
-		RegisterKeyMapping('hotbar', shared.locale('disable_hotbar'), 'keyboard', client.keys[3])
-		TriggerEvent('chat:removeSuggestion', '/hotbar')
 
 		RegisterCommand('steal', function()
 			openNearbyInventory()
 		end)
-
-		for i = 1, 5 do
-			local hotkey = ('hotkey%s'):format(i)
-			RegisterCommand(hotkey, function() if not invOpen then useSlot(i) end end)
-			RegisterKeyMapping(hotkey, shared.locale('use_hotbar', i), 'keyboard', i)
-			TriggerEvent('chat:removeSuggestion', '/'..hotkey)
-		end
 	end
 end
 
@@ -928,9 +929,6 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 	PlayerData.id = cache.playerId
 	PlayerData.source = source
 
-	print(shared.gameVersion)
-	print(currentDrops, inventory, weight, esxItem, player, source)
-
 	setmetatable(PlayerData, {
 		__index = function(self, key)
 			if key == 'ped' then
@@ -945,13 +943,11 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 		Items[data.name].count += data.count
 	end
 
-	-- if Items['phone']?.count < 1 and GetResourceState('npwd') == 'started' then
-	-- 	exports.npwd:setPhoneDisabled(true)
-	-- end
-
 	client.setPlayerData('inventory', inventory)
 	client.setPlayerData('weight', weight)
+
 	currentWeapon = nil
+
 	Utils.ClearWeapons()
 
 	local ItemData = table.create(0, #Items)
@@ -1023,14 +1019,14 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 
 	plyState:set('invBusy', false, false)
 	plyState:set('invOpen', false, false)
+
 	TriggerEvent('ox_inventory:updateInventory', PlayerData.inventory)
 
-	lib.notify({ description = shared.locale('inventory_setup') })
+	-- lib.notify({ description = shared.locale('inventory_setup') })
+
 	Utils.WeaponWheel(false)
 
 	local function nearbyLicense(self)
-		print('čau')
-
 		if self.currentDistance < 1.2 and lib.points.closest().id == self.id and IsControlJustReleased(0, 38) then
 			lib.callback('ox_inventory:buyLicense', 1000, function(success, message)
 				if success then
@@ -1055,18 +1051,6 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 
 	client.interval = SetInterval(function()
 		local playerPed = cache.ped
-
-		if IsControlJustPressed(0, 0xC1989F95) then
-			local closest = lib.points.closest()
-
-			if closest and closest.currentDistance < 1.2 then
-				if closest.inv ~= 'license' and closest.inv ~= 'policeevidence' then
-					return client.openInventory(closest.inv or 'drop', { id = closest.invId, type = closest.type })
-				end
-			end
-	
-			client.openInventory()
-		end
 
 		if invOpen == false then
 			playerCoords = GetEntityCoords(playerPed)
@@ -1133,6 +1117,18 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 			disableControls()
 			if invBusy then DisablePlayerFiring(playerId, true) end
 
+			if IsControlJustReleased(0, 0xC1989F95) then
+				local closest = lib.points.closest()
+	
+				if closest and closest.currentDistance < 1.2 then
+					if closest.inv ~= 'license' and closest.inv ~= 'policeevidence' then
+						return client.openInventory(closest.inv or 'drop', { id = closest.invId, type = closest.type })
+					end
+				end
+		
+				client.openInventory()
+			end
+			
 			if Citizen.InvokeNative(0x580417101DDB492F, 0, keys[1]) then
 				ExecuteCommand('hotkey1')	
 			elseif Citizen.InvokeNative(0x580417101DDB492F, 0, keys[2]) then

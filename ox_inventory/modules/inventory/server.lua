@@ -274,6 +274,7 @@ function Inventory.Save(inv)
 		else
 			MySQL:saveStash(inv.owner, inv.dbId, inventory)
 		end
+
 		inv.changed = false
 	end
 end
@@ -384,6 +385,107 @@ function Inventory.Load(id, invType, owner)
 end
 
 local table = lib.table
+
+-- Example of usage
+-- Inventory.Transaction(
+--     serverId, 
+--     {
+--       give = {
+-- 			{
+-- 				itemName = 'money',
+-- 				count = 500
+-- 			}
+--       },
+--     },
+--     function()   
+-- 		print('transaction succ')  
+--     end,
+--     function()
+--		print('transaction failed')
+--     end
+-- )
+
+---@param serverId number
+---@param data table transactionData
+---@param successCb boolean transactionSuccess
+---@param failCb boolean transactionFailed
+function Inventory.Transaction(serverId, data, successCb, failCb)
+	if serverId == nil then
+		return shared.warning('Transaction failed, cannot get player serverId.')
+	end
+
+	local transaction = data
+
+	local transactionTake = false
+	local transactionGive = false
+
+	if transaction.take then
+		local metadata = {}
+
+		if transaction.take.metadata ~= nil then
+			metadata = transaction.take.metadata
+		else
+			metadata = {}
+		end
+
+		local hasItem = Inventory.GetItem(
+			serverId, 
+			transaction.take.itemName, 
+			metadata, 
+			{}
+		)
+
+		if hasItem > 0 then
+			Inventory.RemoveItem(serverId, transaction.take.itemName, transaction.take.count, metadata)
+			transactionTake = true
+		else
+			transactionTake = false
+		end
+	end
+
+	if transaction.give then
+		local metadata = {}
+
+		if transaction.give.metadata ~= nil then
+			metadata = transaction.give.metadata
+		else
+			metadata = {}
+		end
+
+		for i = 1, #transaction.give do
+
+			local metadata = {}
+
+			if transaction.give[i].metadata ~= nil then
+				metadata = transaction.give[i].metadata
+			else
+				metadata = {}
+			end
+
+			Inventory.AddItem(serverId, transaction.give[i].itemName, transaction.give[i].count, nil, nil, function(success, reason)
+				if i == #transaction.give then
+					transactionGive = true
+				end
+			end)
+		end
+	end
+
+	if (transaction.take and transaction.take ~= nil) and (transaction.give and transaction.give ~= nil) then
+		if transactionTake and transactionGive then
+			successCb(true)
+		else
+			failCb(true)
+		end
+	else
+		if (transactionTake or transactionGive) then
+			successCb(true)
+		else
+			failCb(true)
+		end
+	end
+end
+
+exports('Transaction', Inventory.Transaction)
 
 ---@param inv string | number
 ---@param item table | string
@@ -1194,11 +1296,14 @@ exports('ClearInventory', Inventory.Clear)
 
 local function playerDropped(source)
 	local inv = Inventory(source)
+	
 	if inv then
 		local openInventory = inv.open and Inventories[inv.open]
+		
 		if openInventory then
 			openInventory.open = false
 		end
+
 		Inventories[source] = nil
 	end
 end

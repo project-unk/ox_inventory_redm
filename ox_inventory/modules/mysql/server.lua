@@ -1,26 +1,36 @@
 local Query = {
 	SELECT_STASH = 'SELECT data FROM ox_inventory WHERE owner = ? AND name = ?',
 	UPDATE_STASH = 'INSERT INTO ox_inventory (owner, name, data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE data = VALUES(data)',
-	SELECT_GLOVEBOX = 'SELECT plate, glovebox FROM `user_vehicles` WHERE plate = ?',
-	SELECT_TRUNK = 'SELECT plate, trunk FROM `user_vehicles` WHERE plate = ?',
-	SELECT_PLAYER = 'SELECT inventory FROM `characters` WHERE charid = ?',
-	UPDATE_TRUNK = 'UPDATE `user_vehicles` SET trunk = ? WHERE plate = ?',
-	UPDATE_GLOVEBOX = 'UPDATE `user_vehicles` SET glovebox = ? WHERE plate = ?',
-	UPDATE_PLAYER = 'UPDATE `characters` SET inventory = ? WHERE charid = ?',
+	SELECT_GLOVEBOX = 'SELECT plate, glovebox FROM `{vehicle_column}` WHERE plate = ?',
+	SELECT_TRUNK = 'SELECT plate, trunk FROM `{vehicle_column}` WHERE plate = ?',
+	SELECT_PLAYER = 'SELECT inventory FROM `{user_column}` WHERE {charId} = ?',
+	UPDATE_TRUNK = 'UPDATE `{vehicle_column}` SET trunk = ? WHERE plate = ?',
+	UPDATE_GLOVEBOX = 'UPDATE `{vehicle_column}` SET glovebox = ? WHERE plate = ?',
+	UPDATE_PLAYER = 'UPDATE `{user_column}` SET inventory = ? WHERE {charId} = ?',
 }
 
-local function replace(playerColumn, vehicleColumn)
-	for k, v in pairs(Query) do
-		if v:find('user_vehicles') then
-			Query[k] = v:gsub('user_vehicles', vehicleColumn)
-		elseif v:find('characters') then
-			Query[k] = v:gsub('characters', playerColumn)
-		end
-	end
-end
+do
+	local playerColumn, vehicleColumn, charId
 
-if shared.framework == 'esx' then
-	replace('users', 'owned_vehicles')
+	if shared.framework == 'ox' then
+		playerColumn = 'characters'
+		vehicleColumn = 'vehicles'
+	elseif shared.framework == 'esx' then
+		playerColumn = 'users'
+		vehicleColumn = 'owned_vehicles'
+	elseif shared.framework == 'qbr' then
+		playerColumn = 'players'
+		vehicleColumn = 'player_vehicles'
+		charId = 'id'
+	elseif shared.framework == 'redem' then
+		playerColumn = 'characters'
+		vehicleColumn = 'stables'
+		charId = 'identifier'
+	end
+
+	for k, v in pairs(Query) do
+		Query[k] = v:gsub('{user_column}', playerColumn):gsub('{vehicle_column}', vehicleColumn):gsub('{charId}', charId)
+	end
 end
 
 function MySQL:loadPlayer(identifier)
