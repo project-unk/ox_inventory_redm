@@ -57,73 +57,77 @@ setmetatable(Items, {
 })
 
 CreateThread(function()
-	if shared.framework == 'esx' then
-		local items = MySQL.query.await('SELECT * FROM items')
+-- 	if shared.framework == 'esx' then
+-- 		local items = MySQL.query.await('SELECT * FROM items')
 
-		if items and #items > 0 then
-			local dump = {}
-			local count = 0
+-- 		if items and #items > 0 then
+-- 			local dump = {}
+-- 			local count = 0
 
-			for i = 1, #items do
-				local item = items[i]
+-- 			for i = 1, #items do
+-- 				local item = items[i]
 
-				if not ItemList[item.name] then
-					item.close = item.closeonuse or true
-					item.stack = item.stackable or true
-					item.description = item.description
-					item.weight = item.weight or 0
-					dump[i] = item
-					count += 1
-				end
-			end
+-- 				if not ItemList[item.name] then
+-- 					item.close = item.closeonuse or true
+-- 					item.stack = item.stackable or true
+-- 					item.description = item.description
+-- 					item.weight = item.weight or 0
+-- 					dump[i] = item
+-- 					count += 1
+-- 				end
+-- 			end
 
-			if next(dump) then
-				local file = {string.strtrim(LoadResourceFile(shared.resource, 'data/items.lua'))}
-				file[1] = file[1]:gsub('}$', '')
+-- 			if next(dump) then
+-- 				local file = {string.strtrim(LoadResourceFile(shared.resource, 'data/items.lua'))}
+-- 				file[1] = file[1]:gsub('}$', '')
 
-				local itemFormat = [[
+-- 				local itemFormat = [[
 
-	['%s'] = {
-		label = '%s',
-		weight = %s,
-		stack = %s,
-		close = %s,
-		description = %s
-	},
-]]
-				local fileSize = #file
+-- 	['%s'] = {
+-- 		label = '%s',
+-- 		weight = %s,
+-- 		stack = %s,
+-- 		close = %s,
+-- 		description = %s
+-- 	},
+-- ]]
+-- 				local fileSize = #file
 
-				for _, item in pairs(items) do
-					local formatName = item.name:gsub("'", "\\'"):lower()
-					if not ItemList[formatName] then
-						fileSize += 1
+-- 				for _, item in pairs(items) do
+-- 					local formatName = item.name:gsub("'", "\\'"):lower()
+-- 					if not ItemList[formatName] then
+-- 						fileSize += 1
 
-						file[fileSize] = (itemFormat):format(formatName, item.label:gsub("'", "\\'"):lower(), item.weight, item.stack, item.close, item.description and ('"%s"'):format(item.description) or 'nil')
-						ItemList[formatName] = v
-					end
-				end
+-- 						file[fileSize] = (itemFormat):format(formatName, item.label:gsub("'", "\\'"):lower(), item.weight, item.stack, item.close, item.description and ('"%s"'):format(item.description) or 'nil')
+-- 						ItemList[formatName] = v
+-- 					end
+-- 				end
 
-				file[fileSize+1] = '}'
+-- 				file[fileSize+1] = '}'
 
-				SaveResourceFile(shared.resource, 'data/items.lua', table.concat(file), -1)
-				shared.info(count, 'items have been copied from the database')
-			end
+-- 				SaveResourceFile(shared.resource, 'data/items.lua', table.concat(file), -1)
+-- 				shared.info(count, 'items have been copied from the database')
+-- 			end
 
-			shared.warning('Database contains', #items, 'items.')
-			shared.warning('These items should be removed, and any queries for items should instead reference ESX.Items')
-			shared.warning('These entries are no longer removed to satisfy the creators of obfuscated and encrypted resources.')
-			shared.warning('Note: Any items that exist in item data and not the database will not work in said resources.')
-			shared.warning('Apparently indexing ESX.Items is too big brain, or something.')
-		end
-	end
+-- 			shared.warning('Database contains', #items, 'items.')
+-- 			shared.warning('These items should be removed, and any queries for items should instead reference ESX.Items')
+-- 			shared.warning('These entries are no longer removed to satisfy the creators of obfuscated and encrypted resources.')
+-- 			shared.warning('Note: Any items that exist in item data and not the database will not work in said resources.')
+-- 			shared.warning('Apparently indexing ESX.Items is too big brain, or something.')
+-- 		end
+-- 	end
 
 	if server.clearstashes then MySQL.query('DELETE FROM ox_inventory WHERE lastupdated < (NOW() - INTERVAL '..server.clearstashes..') OR data = "[]"') end
 
 	local count = 0
+
 	Wait(2000)
+
 	if server.UsableItemsCallbacks then
 		server.UsableItemsCallbacks = server.UsableItemsCallbacks()
-	else server.UsableItemsCallbacks = {} end
+	else 
+		server.UsableItemsCallbacks = {} 
+	end
 
 	for _, item in pairs(ItemList) do
 		if item.consume and item.consume > 0 and server.UsableItemsCallbacks[item.name] then server.UsableItemsCallbacks[item.name] = nil end
@@ -133,40 +137,6 @@ CreateThread(function()
 	shared.info('Inventory has loaded '..count..' items')
 	collectgarbage('collect') -- clean up from initialisation
 	shared.ready = true
-
-	--[[local ignore = {[0] = '?', [`WEAPON_UNARMED`] = 'unarmed', [966099553] = 'shovel'}
-	while true do
-		Wait(45000)
-		local Players = ESX.GetPlayers()
-		for i = 1, #Players do
-			local i = Players[i]
-			--if not IsPlayerAceAllowed(i, 'command.refresh') then
-				local inv, ped = Inventory(i), GetPlayerPed(i)
-				local hash, curWeapon = GetSelectedPedWeapon(ped)
-				if not ignore[hash] then
-					curWeapon = Utils.GetWeapon(hash)
-					if curWeapon then
-						local count = 0
-						for k, v in pairs(inv.items) do
-							if v.name == curWeapon.name then
-								count = 1 break
-							end
-						end
-						if count == 0 then
-							-- does not own weapon; player may be cheating
-							shared.warning(inv.name, 'is using an invalid weapon (', curWeapon.name, ')')
-							--DropPlayer(i)
-						end
-					else
-						-- weapon doesn't exist; player may be cheating
-						shared.warning(inv.name, 'is using an unknown weapon (', hash, ')')
-						--DropPlayer(i)
-					end
-				end
-			--end
-			Wait(200)
-		end
-	end]]
 end)
 
 local function GenerateText(num)

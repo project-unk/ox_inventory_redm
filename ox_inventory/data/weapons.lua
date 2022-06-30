@@ -1,567 +1,369 @@
 return {
 	Weapons = {
+		['WEAPON_RIFLE_ELEPHANT'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-rifle",
+			["weight"]=1000,
+			["label"]="Elephant Rifle",
+		 },
 
-		['WEAPON_ADVANCEDRIFLE'] = {
-			label = 'Advanced Rifle',
-			weight = 3180,
-			durability = 0.03,
-			ammoname = 'ammo-rifle',
-		},
-
-		['WEAPON_APPISTOL'] = {
-			label = 'AP Pistol',
-			weight = 1220,
-			durability = 0.1,
-			ammoname = 'ammo-9',
-		},
-
-		['WEAPON_ASSAULTRIFLE'] = {
-			label = 'Assault Rifle',
-			weight = 3470,
-			durability = 0.03,
-			ammoname = 'ammo-rifle2',
-		},
-
-		['WEAPON_ASSAULTRIFLE_MK2'] = {
-			label = 'Assault Rifle MK2',
-			weight = 3300,
-			durability = 0.03,
-			ammoname = 'ammo-rifle2',
-		},
-
-		['WEAPON_ASSAULTSHOTGUN'] = {
-			label = 'Assault Shotgun',
-			weight = 3100,
-			durability = 0.05,
-			ammoname = 'ammo-shotgun'
-		},
-
-		['WEAPON_ASSAULTSMG'] = {
-			label = 'Assault SMG',
-			weight = 2850,
-			durability = 0.05,
-			ammoname = 'ammo-rifle'
-		},
-
-		['WEAPON_BALL'] = {
-			label = 'Ball',
-			weight = 149,
+		 ['WEAPON_MELEE_CLEAVER'] = {
 			throwable = true,
-		},
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Throwable Cleaver",
+		 },
 
-		['WEAPON_BAT'] = {
-			label = 'Bat',
-			weight = 1134,
-			durability = 0.1,
-		},
 
-		['WEAPON_BATTLEAXE'] = {
-			label = 'Battle Axe',
-			weight = 1200,
-			durability = 0.1,
-		},
-
-		['WEAPON_BOTTLE'] = {
-			label = 'Bottle',
-			weight = 350,
-			durability = 0.1,
-		},
-
-		['WEAPON_BULLPUPRIFLE'] = {
-			label = 'Bullpup Rifle',
-			weight = 2900,
-			durability = 0.03,
-			ammoname = 'ammo-rifle'
-		},
-
-		['WEAPON_BULLPUPRIFLE_MK2'] = {
-			label = 'Bullpup Rifle MK2',
-			weight = 2900,
-			durability = 0.03,
-			ammoname = 'ammo-rifle'
-		},
-
-		['WEAPON_BULLPUPSHOTGUN'] = {
-			label = 'Bullpup Shotgun',
-			weight = 3100,
-			durability = 0.2,
-			ammoname = 'ammo-shotgun'
-		},
-
-		['WEAPON_BZGAS'] = {
-			label = 'BZ Gas',
-			weight = 600,
+		 ['WEAPON_MELEE_KNIFE_TRADER'] = {
 			throwable = true,
-		},
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Tradders Knife",
+		 },
 
-		['WEAPON_CARBINERIFLE'] = {
-			label = 'Carbine Rifle',
-			weight = 3100,
-			durability = 0.03,
-			ammoname = 'ammo-rifle'
-		},
-
-		['WEAPON_CARBINERIFLE_MK2'] = {
-			label = 'Carbine Rifle MK2',
-			weight = 3000,
-			durability = 0.03,
-			ammoname = 'ammo-rifle'
-		},
-
-		['WEAPON_CERAMICPISTOL'] = {
-			label = 'Ceramic Pistol',
-			weight = 700,
-			durability = 0.2,
-			ammoname = 'ammo-9'
-		},
-
-		['WEAPON_COMBATMG'] = {
-			label = 'Combat MG',
-			weight = 10000,
-			durability = 0.02,
-			ammoname = 'ammo-rifle'
-		},
-
-		['WEAPON_COMBATMG_MK2'] = {
-			label = 'Combat MG MK2',
-			weight = 10500,
-			durability = 0.02,
-			ammoname = 'ammo-rifle2'
-		},
-
-		['WEAPON_COMBATPDW'] = {
-			label = 'Combat PDW',
-			weight = 2700,
-			durability = 0.1,
-			ammoname = 'ammo-9'
-		},
-
-		['WEAPON_COMBATPISTOL'] = {
-			label = 'Combat Pistol',
-			weight = 970,
-			durability = 0.2,
-			ammoname = 'ammo-9'
-		},
-
-		['WEAPON_COMBATSHOTGUN'] = {
-			label = 'Combat Shotgun',
-			weight = 4400,
-			durability = 0.2,
-			ammoname = 'ammo-shotgun'
-		},
-
-		['WEAPON_COMPACTRIFLE'] = {
-			label = 'Compact Rifle',
-			weight = 2700,
-			durability = 0.05,
-			ammoname = 'ammo-rifle2'
-		},
-
-		['WEAPON_CROWBAR'] = {
-			label = 'Crowbar',
-			weight = 2500,
-			durability = 0.1,
-		},
-
-		['WEAPON_DAGGER'] = {
-			label = 'Dagger',
-			weight = 800,
-			durability = 0.1,
-		},
-
-		['WEAPON_DBSHOTGUN'] = {
-			label = 'Double Barrel Shotgun',
-			weight = 3175,
-			durability = 0.4,
-			ammoname = 'ammo-shotgun'
-		},
-
-		['WEAPON_DOUBLEACTION'] = {
-			label = 'Double Action Revolver',
-			weight = 940,
-			durability = 0.2,
-			ammoname = 'ammo-38'
-		},
-
-		['WEAPON_FIREEXTINGUISHER'] = {
-			label = 'Fire Extinguisher',
-			weight = 8616,
-		},
-
-		['WEAPON_FIREWORK'] = {
-			label = 'Firework Launcher',
-			weight = 1000,
-			durability = 0.5,
-		},
-
-		['WEAPON_FLARE'] = {
-			label = 'Flare',
-			weight = 235,
+		 ['WEAPON_MELEE_HATCHET_HUNTER'] = {
 			throwable = true,
-		},
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Hunter Hatchet",
+		 },
 
-		['WEAPON_FLAREGUN'] = {
-			label = 'Flare Gun',
-			weight = 1000,
-			durability = 0.5,
-			ammoname = 'ammo-flare'
-		},
-
-		['WEAPON_FLASHLIGHT'] = {
-			label = 'Flashlight',
-			weight = 125,
-			durability = 0.1,
-		},
-
-		['WEAPON_GOLFCLUB'] = {
-			label = 'Golf Club',
-			weight = 330,
-			durability = 0.1,
-		},
-
-		['WEAPON_GRENADE'] = {
-			label = 'Grenade',
-			weight = 600,
+		 ['WEAPON_MELEE_MACHETE_COLLECTOR'] = {
 			throwable = true,
-		},
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Collector Machete",
+		 },
 
-		['WEAPON_GUSENBERG'] = {
-			label = 'Gusenberg',
-			weight = 4900,
-			durability = 0.04,
-			ammoname = 'ammo-45'
-		},
 
-		['WEAPON_HAMMER'] = {
-			label = 'Hammer',
-			weight = 1200,
-			durability = 0.1,
-		},
 
-		['WEAPON_HATCHET'] = {
-			label = 'Hatchet',
-			weight = 1000,
-			durability = 0.1,
-		},
 
-		['WEAPON_HAZARDCAN'] = {
-			label = 'Hazard Can',
-			weight = 12000,
-		},
+		 ['WEAPON_REVOLVER_NAVY'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-revolver",
+			["weight"]=1000,
+			["label"]="Navy Revolver 1851",
+		 },
+		 ['WEAPON_REPEATER_HENRY'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-repeater",
+			["weight"]=1000,
+			["label"]="Henry Model 1860",
+		 },
+		 ['WEAPON_SNIPERRIFLE_CARCANO'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-rifle",
+			["weight"]=1000,
+			["label"]="Carcano 1891 Short Rifle",
+		 },
+		 ['WEAPON_PISTOL_VOLCANIC'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-pistol",
+			["weight"]=1000,
+			["label"]="Volcanic Pistol",
+		 },
+		 ['WEAPON_REPEATER_EVANS'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-repeater",
+			["weight"]=1000,
+			["label"]="Evans Repeating Rifle",
+		 },
+		 ['WEAPON_THROWN_DYNAMITE'] = {
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Throwable Dynamite",
+		 },
+		 ['WEAPON_MELEE_MACHETE'] = {
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Machete",
+		 },
+		 ['WEAPON_MELEE_LANTERN'] = {
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Silver Lantern",
+		 },
+		 ['WEAPON_THROWN_TOMAHAWK_ANCIENT'] = {
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Throwable Old Axe",
+		 },
 
-		['WEAPON_HEAVYPISTOL'] = {
-			label = 'Heavy Pistol',
-			weight = 1100,
-			durability = 0.2,
-			ammoname = 'ammo-45'
-		},
 
-		['WEAPON_HEAVYSHOTGUN'] = {
-			label = 'Heavy Shotgun',
-			weight = 3600,
-			durability = 0.1,
-			ammoname = 'ammo-shotgun'
-		},
 
-		['WEAPON_HEAVYSNIPER'] = {
-			label = 'Heavy Sniper',
-			weight = 14000,
-			durability = 0.5,
-			ammoname = 'ammo-heavysniper'
-		},
-
-		['WEAPON_HEAVYSNIPER_MK2'] = {
-			label = 'Heavy Sniper MK2',
-			weight = 10432,
-			durability = 0.5,
-			ammoname = 'ammo-heavysniper'
-		},
-
-		['WEAPON_KNIFE'] = {
-			label = 'Knife',
-			weight = 300,
-			durability = 0.1,
-		},
-
-		['WEAPON_KNUCKLE'] = {
-			label = 'Knuckle Dusters',
-			weight = 300,
-			durability = 0.1,
-		},
-
-		['WEAPON_MACHETE'] = {
-			label = 'Machete',
-			weight = 1000,
-			durability = 0.1,
-		},
-
-		['WEAPON_MACHINEPISTOL'] = {
-			label = 'Machine Pistol',
-			weight = 1400,
-			durability = 0.05,
-			ammoname = 'ammo-9'
-		},
-
-		['WEAPON_MARKSMANPISTOL'] = {
-			label = 'Marksman Pistol',
-			weight = 1588,
-			durability = 0.5,
-			ammoname = 'ammo-22'
-		},
-
-		['WEAPON_MARKSMANRIFLE'] = {
-			label = 'Marksman Rifle',
-			weight = 7500,
-			durability = 0.4,
-			ammoname = 'ammo-sniper'
-		},
-
-		['WEAPON_MARKSMANRIFLE_MK2'] = {
-			label = 'Marksman Rifle',
-			weight = 4000,
-			durability = 0.4,
-			ammoname = 'ammo-sniper'
-		},
-
-		['WEAPON_MG'] = {
-			label = 'Machine Gun',
-			weight = 9000,
-			durability = 0.02,
-			ammoname = 'ammo-rifle2'
-		},
-
-		['WEAPON_MICROSMG'] = {
-			label = 'Micro SMG',
-			weight = 4000,
-			durability = 0.1,
-			ammoname = 'ammo-45'
-		},
-
-		['WEAPON_MILITARYRIFLE'] = {
-			label = 'Military Rifle',
-			weight = 3600,
-			durability = 0.03,
-			ammoname = 'ammo-rifle'
-		},
-
-		['WEAPON_MINISMG'] = {
-			label = 'Mini SMG',
-			weight = 2770,
-			durability = 0.05,
-			ammoname = 'ammo-9'
-		},
-
-		['WEAPON_MOLOTOV'] = {
-			label = 'Molotov',
-			weight = 1800,
+		 ['WEAPON_REVOLVER_LEMAT'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-revolver",
+			["weight"]=1000,
+			["label"]="LeMat Revolver",
+		 },
+		 ['WEAPON_REPEATER_CARBINE'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-repeater",
+			["weight"]=1000,
+			["label"]="Spencer Model 1865",
+		 },
+		 ['WEAPON_MELEE_KNIFE'] = {
+			["durability"]=0.1,
 			throwable = true,
-		},
+			["weight"]=100,
+			["label"]="Knife",
+		 },
+		 ['WEAPON_RIFLE_VARMINT'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-rifle",
+			["weight"]=1000,
+			["label"]="Winchester Model 1890",
+		 },
 
-		['WEAPON_MUSKET'] = {
-			label = 'Musket',
-			weight = 4500,
-			durability = 0.5,
-			ammoname = 'ammo-musket'
-		},
+		 ['WEAPON_REVOLVER_DOUBLEACTION'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-rifle",
+			["weight"]=1000,
+			["label"]="Double Action Revolver",
+		 },
 
-		['WEAPON_NAVYREVOLVER'] = {
-			label = 'Navy Revolver',
-			weight = 2000,
-			durability = 0.2,
-			ammoname = 'ammo-44'
-		},
+		 
 
-		['WEAPON_NIGHTSTICK'] = {
-			label = 'Nightstick',
-			weight = 1000,
-			durability = 0.1,
-		},
-
-		['WEAPON_PETROLCAN'] = {
-			label = 'Gas Can',
-			weight = 12000,
-		},
-
-		['WEAPON_PIPEBOMB'] = {
-			label = 'Pipe Bomb',
-			weight = 1800,
+		 ['WEAPON_MELEE_HATCHET'] = {
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Hatchet",
+		 },
+		 ['WEAPON_REVOLVER_CATTLEMAN'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-revolver",
+			["weight"]=1000,
+			["label"]="Colt M1873 Single Action",
+		 },
+		 ['WEAPON_RIFLE_SPRINGFIELD'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-rifle",
+			["weight"]=1000,
+			["label"]="Springfield Model 1873",
+		 },
+		 ['WEAPON_REVOLVER_SCHOFIELD'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-revolver",
+			["weight"]=1000,
+			["label"]="Smith & Wesson No. 3",
+		 },
+		 ['WEAPON_RIFLE_BOLTACTION'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-rifle",
+			["weight"]=1000,
+			["label"]="Springfield Model 1892",
+		 },
+		 ['WEAPON_MELEE_KNIFE_JAWBONE'] = {
 			throwable = true,
-		},
-
-		['WEAPON_PISTOL'] = {
-			label = 'Pistol',
-			weight = 970,
-			durability = 0.1,
-			ammoname = 'ammo-9',
-		},
-
-		['WEAPON_PISTOL50'] = {
-			label = 'Pistol .50',
-			weight = 2000,
-			durability = 0.1,
-			ammoname = 'ammo-50'
-		},
-
-		['WEAPON_PISTOL_MK2'] = {
-			label = 'Pistol MK2',
-			weight = 970,
-			durability = 0.5,
-			ammoname = 'ammo-9'
-		},
-
-		['WEAPON_POOLCUE'] = {
-			label = 'Pool Cue',
-			weight = 146,
-			durability = 0.1,
-		},
-
-		['WEAPON_PROXMINE'] = {
-			label = 'Proximity Mine',
-			weight = 2500,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Jawbone Knife",
+		 },
+		 ['WEAPON_SHOTGUN_SAWEDOFF'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-shotgun",
+			["weight"]=1000,
+			["label"]="Hamerless Shotgun 1883",
+		 },
+		 ['WEAPON_THROWN_TOMAHAWK'] = {
 			throwable = true,
-		},
-
-		['WEAPON_PUMPSHOTGUN'] = {
-			label = 'Pump Shotgun',
-			weight = 3400,
-			durability = 0.1,
-			ammoname = 'ammo-shotgun'
-		},
-
-		['WEAPON_PUMPSHOTGUN_MK2'] = {
-			label = 'Pump Shotgun MK2',
-			weight = 3200,
-			durability = 0.1,
-			ammoname = 'ammo-shotgun'
-		},
-
-		['WEAPON_REVOLVER'] = {
-			label = 'Revolver',
-			weight = 2260,
-			durability = 0.1,
-			ammoname = 'ammo-44'
-		},
-
-		['WEAPON_REVOLVER_MK2'] = {
-			label = 'Revolver MK2',
-			weight = 1500,
-			durability = 0.1,
-			ammoname = 'ammo-44'
-		},
-
-		['WEAPON_SAWNOFFSHOTGUN'] = {
-			label = 'Sawn Off Shotgun',
-			weight = 2380,
-			durability = 0.1,
-			ammoname = 'ammo-shotgun'
-		},
-
-		['WEAPON_SMG'] = {
-			label = 'SMG',
-			weight = 3084,
-			durability = 0.8,
-			ammoname = 'ammo-9'
-		},
-
-		['WEAPON_SMG_MK2'] = {
-			label = 'SMG Mk2',
-			weight = 2700,
-			durability = 0.05,
-			ammoname = 'ammo-9'
-		},
-
-		['WEAPON_SMOKEGRENADE'] = {
-			label = 'Smoke Grenade',
-			weight = 600,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Throwable Axe",
+		 },
+		 ['WEAPON_SHOTGUN_DOUBLEBARREL'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-shotgun",
+			["weight"]=1000,
+			["label"]="Colt Hammer Shotgun 1878",
+		 },
+		 ['WEAPON_REVOLVER_DOUBLEACTION_GAMBLER'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-revolver",
+			["weight"]=1000,
+			["label"]="Colt M1892 Double-action",
+		 },
+		 ['WEAPON_THROWN_MOLOTOV'] = {
 			throwable = true,
-		},
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Throwable Molotov",
+		 },
+		 ['WEAPON_REVOLVER_CATTLEMAN_MEXICAN'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-revolver",
+			["weight"]=1000,
+			["label"]="Steel Colt M1873",
+		 },
+		 ['WEAPON_PISTOL_MAUSER'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-pistol",
+			["weight"]=1000,
+			["label"]="Mauser C96",
+		 },
+		 ['WEAPON_SNIPERRIFLE_ROLLINGBLOCK'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-rifle",
+			["weight"]=1000,
+			["label"]="Remington M1867",
+		 },
+		 ['WEAPON_SHOTGUN_DOUBLEBARREL_EXOTIC'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-shotgun",
+			["weight"]=1000,
+			["label"]="Steel Hammer Shotgun 1878",
+		 },
 
-		['WEAPON_SNIPERRIFLE'] = {
-			label = 'Sniper Rifle',
-			weight = 6500,
-			durability = 0.5,
-			ammoname = 'ammo-sniper'
-		},
+		 ['WEAPON_SHOTGUN_REPEATING'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-shotgun",
+			["weight"]=1000,
+			["label"]="Repeating",
+		 },
 
-		['WEAPON_SNOWBALL'] = {
-			label = 'Snow Ball',
-			weight = 5,
+		 ['WEAPON_SHOTGUN_PUMP'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-shotgun",
+			["weight"]=1000,
+			["label"]="Repeating",
+		 },
+		 
+		 ['WEAPON_BOW'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-arrow",
+			["weight"]=100,
+			["label"]="Flatbow",
+		 },
+		 
+		 ['WEAPON_SNIPERRIFLE_ROLLINGBLOCK_EXOTIC'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-rifle",
+			["weight"]=1000,
+			["label"]="Steel Remington M1867",
+		 },
+
+		 ['WEAPON_BOW_IMPROVED'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-arrow",
+			["weight"]=100,
+			["label"]="Sturdy Flatbow",
+		 },
+		 
+		 ['WEAPON_LASSO'] = {
+			 throwable = true,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Lasso",
+		 },
+		 ['WEAPON_LASSO_REINFORCED'] = {
 			throwable = true,
-		},
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Sturdy Lasso",
+		 },
 
-		['WEAPON_SNSPISTOL'] = {
-			label = 'SNS Pistol',
-			weight = 465,
-			durability = 0.1,
-			ammoname = 'ammo-45'
-		},
-
-		['WEAPON_SNSPISTOL_MK2'] = {
-			label = 'SNS Pistol MK2',
-			weight = 465,
-			durability = 0.1,
-			ammoname = 'ammo-45'
-		},
-
-		['WEAPON_SPECIALCARBINE'] = {
-			label = 'Special Carbine',
-			weight = 3000,
-			durability = 0.03,
-			ammoname = 'ammo-rifle'
-		},
-
-		['WEAPON_SPECIALCARBINE_MK2'] = {
-			label = 'Special Carbine MK2',
-			weight = 3370,
-			durability = 0.03,
-			ammoname = 'ammo-rifle'
-		},
-
-		['WEAPON_STICKYBOMB'] = {
-			label = 'Sticky Bomb',
-			weight = 1000,
+		 ['WEAPON_KIT_BINOCULARS_IMPROVED'] = {
 			throwable = true,
-		},
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Improved Binoculars",
+		 },
 
-		['WEAPON_STONE_HATCHET'] = {
-			label = 'Stone Hatchet',
-			weight = 800,
-			durability = 0.1,
-		},
+		 ['WEAPON_KIT_BINOCULARS'] = {
+			throwable = true,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Binoculars",
+		 },
 
-		['WEAPON_STUNGUN'] = {
-			label = 'Tazer',
-			weight = 227,
-			durability = 0.1,
-		},
+		 ['WEAPON_FISHINGROD'] = {
+			throwable = true,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Fishing Rod",
+		 },
 
-		['WEAPON_SWEEPERSHOTGUN'] = {
-			label = 'Sweeper Shotgun',
-			weight = 4400,
-			durability = 0.05,
-			ammoname = 'ammo-shotgun'
-		},
+		 ['WEAPON_KIT_CAMERA'] = {
+			throwable = true,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Camera",
+		 },
 
-		['WEAPON_SWITCHBLADE'] = {
-			label = 'Switch Blade',
-			weight = 300,
-			durability = 0.1,
-		},
+		 ['WEAPON_KIT_CAMERA_ADVANCED'] = {
+			throwable = true,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Advanced Camera",
+		 },
 
-		['WEAPON_VINTAGEPISTOL'] = {
-			label = 'Vintage Pistol',
-			weight = 100,
-			durability = 0.1,
-			ammoname = 'ammo-9'
-		},
+		 ['WEAPON_PISTOL_SEMIAUTO'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-pistol",
+			["weight"]=1000,
+			["label"]="Borchardt C-93",
+		 },
+		 ['WEAPON_MELEE_DAVY_LANTERN'] = {
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Golden Lantern",
+		 },
+		 ['WEAPON_THROWN_BOLAS'] = {
+			throwable = true,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Throwable Bolas",
+		 },
+		 ['WEAPON_PISTOL_M1899'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-pistol",
+			["weight"]=1000,
+			["label"]="FN Browning M1900",
+		 },
+		 ['WEAPON_SHOTGUN_SEMIAUTO'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-shotgun",
+			["weight"]=1000,
+			["label"]="Browning Auto-5",
+		 },
+		 ['WEAPON_THROWN_THROWING_KNIVES'] = {
+			throwable = true,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Throwing Knives",
+		 },
 
-		['WEAPON_WRENCH'] = {
-			label = 'Wrench',
-			weight = 2500,
-			durability = 0.1,
-		},
+		 ['WEAPON_THROWN_POISONBOTTLE'] = {
+			throwable = true,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Poison bottle",
+		 },
 
+		 
+
+		 ['WEAPON_REPEATER_WINCHESTER'] = {
+			["durability"]=0.1,
+			["ammoname"]="ammo-repeater",
+			["weight"]=1000,
+			["label"]="Winchester Model 1866",
+		 },
+		 ['WEAPON_MELEE_TORCH'] = {
+			throwable = true,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Wooden Torch",
+		 },
+		 ['WEAPON_MELEE_HAMMER'] = {
+			throwable = true,
+			["durability"]=0.1,
+			["weight"]=100,
+			["label"]="Hammer",
+		 },
 	},
+
 
 	Components = {
 		['at_flashlight'] = {
@@ -569,7 +371,7 @@ return {
 			weight = 120,
 			type = 'flashlight',
 			client = {
-				component = {`COMPONENT_AT_PI_FLSH`,`COMPONENT_AT_AR_FLSH`, `COMPONENT_AT_PI_FLSH_02`},
+				component = {`COMPONENT_AT_PI_FLSH`,`COMPONENT_AT_AR_FLSH`},
 				usetime = 2500
 			}
 		},
@@ -599,7 +401,7 @@ return {
 			type = 'grip',
 			weight = 280,
 			client = {
-				component = {`COMPONENT_AT_AR_AFGRIP`, `COMPONENT_AT_AR_AFGRIP_02`},
+				component = {`COMPONENT_REVOLVER_CATTLEMAN_GRIP`, `COMPONENT_REVOLVER_CATTLEMAN_GRIP_PEARL`, `COMPONENT_REVOLVER_CATTLEMAN_GRIP_EBONY`},
 				usetime = 2500
 			}
 		},
@@ -609,7 +411,7 @@ return {
 			type = 'barrel',
 			weight = 280,
 			client = {
-				component = {`COMPONENT_AT_SR_BARREL_01`,`COMPONENT_AT_MRFL_BARREL_02`,`COMPONENT_AT_MG_BARREL_02`,`COMPONENT_AT_SC_BARREL_02`, `COMPONENT_AT_CR_BARREL_02`, `COMPONENT_AT_BP_BARREL_02`},
+				component = {`COMPONENT_REVOLVER_CATTLEMAN_BARREL_SHORT`,`COMPONENT_REVOLVER_CATTLEMAN_BARREL_LONG`,`COMPONENT_REVOLVER_CATTLEMAN_BARREL_LEGENDARY`},
 				usetime = 2500
 			}
 		},
@@ -729,7 +531,7 @@ return {
 			type = 'sight',
 			weight = 280,
 			client = {
-				component = {`COMPONENT_AT_SCOPE_MEDIUM`, `COMPONENT_AT_SCOPE_MEDIUM_MK2`, `COMPONENT_AT_PI_RAIL_02`, `COMPONENT_AT_PI_RAIL`},
+				component = {`COMPONENT_AT_SCOPE_MEDIUM`, `COMPONENT_AT_SCOPE_MEDIUM_MK2`, `COMPONENT_AT_PI_RAIL_02`},
 				usetime = 2500
 			}
 		},
@@ -1049,6 +851,31 @@ return {
 		['ammo-sniper'] = {
 			label = '7.62 NATO',
 			weight = 11,
+		},
+
+		['ammo-revolver'] = {
+			label = 'Revolver Ammo',
+			weight = 16
+		},
+
+		['ammo-repeater'] = {
+			label = 'Repeatter Ammo',
+			weight = 4
+		},
+
+		['ammo-lantern'] = {
+			label = 'Latern Fuel',
+			weight = 4
+		},
+
+		['ammo-pistol'] = {
+			label = 'Pistol',
+			weight = 4
+		},
+
+		['ammo-undefined'] = {
+			label = 'Undefined',
+			weight = 0
 		}
 	}
 }

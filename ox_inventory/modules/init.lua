@@ -2,7 +2,7 @@ IsDuplicityVersion = IsDuplicityVersion()
 shared = {
 	gameVersion = GetGameName(),
 	resource = GetCurrentResourceName(),
-	framework = GetConvar('inventory:framework', 'qbr'),
+	framework = GetConvar('inventory:framework', 'vorp'),
 	locale = GetConvar('inventory:locale', 'en'),
 	playerslots = GetConvarInt('inventory:slots', 50),
 	playerweight = GetConvarInt('inventory:weight', 30000),
@@ -99,11 +99,7 @@ if not lib then
 	spamError('ox_inventory requires the ox_lib resource, refer to the documentation.')
 end
 
-local success, msg = lib.checkDependency('oxmysql', '2.0.0')
-
-if not success then
-	spamError(msg or "ox_inventory requires version '2.0.0' of 'oxmysql'")
-end
+local success, msg = nil, nil
 
 success, msg = lib.checkDependency('ox_lib', '2.3.2')
 

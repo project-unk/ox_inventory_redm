@@ -20,7 +20,7 @@ description  'What even is an "ESX.Items" anyway?'
 dependencies {
 	'/server:5181',
 	'/onesync',
-	'oxmysql',
+	'mysql-async',
 	'ox_lib',
 }
 
@@ -46,7 +46,7 @@ client_scripts {
 }
 
 server_scripts {
-	'@oxmysql/lib/MySQL.lua',
+	'@mysql-async/lib/MySQL.lua',
 	'modules/mysql/server.lua',
 	'modules/logs/server.lua',
 	'modules/items/server.lua',

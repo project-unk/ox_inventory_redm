@@ -117,6 +117,103 @@ elseif shared.framework == 'qbr' then
 			exports.ox_inventory:setPlayerInventory(player)
 		end
 	end)
+elseif shared.framework == 'vorp' then
+
+	-- Check lua schedule, if you are interested in this part
+	-- Basically we are wrapping vorp_inventory export and provide functionn for it, which emulates vorp API functions.
+
+	function provideExport(exportName, func)
+		AddEventHandler(('__cfx_export_vorp_inventory_%s'):format(exportName), function(setCB)
+			setCB(func)
+		end)
+	end
+
+	-- TODO: Save player inventory on drop / exit.
+	-- TODO: Define missing inventory events
+	-- TODO: Define all options which are used with vorpInvApi object and handle internally by ox_inventory
+	-- TODO: Check inventory images and missing items from vorp_inventory.
+
+	AddEventHandler('vorpCore:canCarryWeapons', function(serverId, amount, cb) 
+		cb(true)
+	end)
+
+	AddEventHandler('vorpCore:canCarryItems', function(serverId, amount, cb) 
+		cb(true) 
+	end)
+
+	AddEventHandler('vorpCore:canCarryItem', function(player, itemName, amount, cb) 
+		cb(true) 
+	end)
+
+	local emulatorLoaded = false
+
+	function server.emulatorAPI()
+		if not emulatorLoaded then
+			emulatorLoaded = true
+			shared.warning('Loading backwards compatiblity for vorp_inventory.')
+		end
+
+		return {
+			RegisterUsableItem = function(item)
+				if not shared.items[item:lower()] then
+					return shared.warning('Item [' .. item .. '] is not registered. -> from script [' .. GetInvokingResource() .. ']')
+				end
+			end,
+
+			addItem = function(serverId, item, count)
+				print('addItem' .. serverId, item, count)
+
+				exports.ox_inventory:AddItem(serverId, item, count, nil, nil, function(success, reason)
+					if success then
+						print(json.encode(reason, {indent=true}))
+					else
+						print('Failed to addItem' .. reason .. '[' .. item .. ']')
+					end
+				end)
+			end,
+
+			removeItem = function(serverId, item, count)
+				print('removeItem' .. serverId, item, count)
+				exports.ox_inventory:RemoveItem(serverId, item, count)
+			end,
+
+			createWeapon = function(serverId, itemName, label)
+				print('createWeapon ' .. serverId, itemName, label)
+
+				exports.ox_inventory:AddItem(serverId, itemName, 1, nil, nil, function(success, reason)
+					if success then
+						print(json.encode(reason, {indent=true}))
+					else
+						print('Failed to addItem' .. reason .. '[' .. itemName .. ']')
+					end
+				end)
+			end
+		}
+	end
+		
+	provideExport('vorp_inventoryApi', server.emulatorAPI)
+
+	if GetResourceState('vorp_inventory'):find('start') then
+		shared.warning('Detected [vorp_inventory], stopping resource!')
+		StopResource('vorp_inventory')
+	end
+
+	function server.getPlayerData(source, data)
+		return {
+			source = source,
+			name = data.firstname .. ' ' .. data.lastname,
+			gender = 'male', -- TODO: Refactor
+			identifier = data.charIdentifier,
+		}
+	end
+
+	AddEventHandler('vorp:SelectedCharacter', function(source, data)
+		local player = server.getPlayerData(source, data)
+
+		if player then
+			exports.ox_inventory:setPlayerInventory(player)
+		end
+	end)
 end
 
 tprint = function(tbl, indent)

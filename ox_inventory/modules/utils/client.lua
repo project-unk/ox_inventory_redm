@@ -18,6 +18,14 @@ function Utils.PlayAnimAdvanced(wait, dict, name, posX, posY, posZ, rotX, rotY, 
 	end)
 end
 
+function GetClosestEntity()
+	local ped = PlayerPedId()
+	local entityId = Citizen.InvokeNative(0xE7E11B8DCBED1058, ped)
+	local type = GetEntityType(entityId)
+
+	return entityId, type
+end
+
 function Utils.Raycast(flag)
 	local playerCoords = GetEntityCoords(cache.ped)
 	local plyOffset = GetOffsetFromEntityInWorldCoords(cache.ped, 0.0, 2.2, -0.25)
@@ -72,32 +80,38 @@ exports('notify', Utils.Notify)
 function Utils.ItemNotify(data) SendNUIMessage({action = 'itemNotify', data = data}) end
 
 function Utils.Disarm(currentWeapon, newSlot)
-	if shared.gameVersion == 'redm' then return print('Utils.Disarm for RedM, is not ready.') end
+	-- if shared.gameVersion == 'redm' then return print('Utils.Disarm for RedM, is not ready.') end
 
-	SetWeaponsNoAutoswap(1)
-	SetWeaponsNoAutoreload(1)
-	SetPedCanSwitchWeapon(cache.ped, 0)
-	SetPedEnableWeaponBlocking(cache.ped, 1)
+	-- SetWeaponsNoAutoswap(1)
+	-- SetWeaponsNoAutoreload(1)
+	-- SetPedCanSwitchWeapon(cache.ped, 0)
+	-- SetPedEnableWeaponBlocking(cache.ped, 1)
 
 	if currentWeapon then
 		local ammo = currentWeapon.ammo and GetAmmoInPedWeapon(cache.ped, currentWeapon.hash)
-		SetPedAmmo(cache.ped, currentWeapon.hash, 0)
+
+		Citizen.InvokeNative(0xBF90DF1A, cache.ped, currentWeapon.hash, 0)
+		-- SetPedAmmo(cache.ped, currentWeapon.hash, 0)
 
 		if not newSlot then
 			ClearPedSecondaryTask(cache.ped)
 			local sleep = (client.hasGroup(shared.police) and (GetWeapontypeGroup(currentWeapon.hash) == 416676503 or GetWeapontypeGroup(currentWeapon.hash) == 690389602)) and 450 or 1400
 			local coords = GetEntityCoords(cache.ped, true)
-			if currentWeapon.hash == `WEAPON_SWITCHBLADE` then
-				Utils.PlayAnimAdvanced(sleep, 'anim@melee@switchblade@holster', 'holster', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(cache.ped), 8.0, 3.0, -1, 48, 0)
+			if currentWeapon.name == 'WEAPON_SWITCHBLADE' then
+				-- Utils.PlayAnimAdvanced(sleep, 'anim@melee@switchblade@holster', 'holster', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(cache.ped), 8.0, 3.0, -1, 48, 0)
 				Wait(600)
 			else
-				Utils.PlayAnimAdvanced(sleep, (sleep == 450 and 'reaction@intimidation@cop@unarmed' or 'reaction@intimidation@1h'), 'outro', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(cache.ped), 8.0, 3.0, -1, 50, 0)
+				-- Utils.PlayAnimAdvanced(sleep, (sleep == 450 and 'reaction@intimidation@cop@unarmed' or 'reaction@intimidation@1h'), 'outro', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(cache.ped), 8.0, 3.0, -1, 50, 0)
 				Wait(sleep)
 			end
+
 			Utils.ItemNotify({currentWeapon.label, currentWeapon.name, shared.locale('holstered')})
 		end
 
-		RemoveAllPedWeapons(cache.ped, true)
+		-- RemoveAllPedWeapons(cache.ped, true)
+
+		Utils.RemoveAllPedWeapons(cache.ped)
+		Utils.RemovePedCurrentWeapon(cache.ped)
 
 		if newSlot then
 			TriggerServerEvent('ox_inventory:updateWeapon', ammo and 'ammo' or 'melee', ammo or currentWeapon.melee, newSlot)
@@ -106,11 +120,67 @@ function Utils.Disarm(currentWeapon, newSlot)
 		currentWeapon = nil
 		TriggerEvent('ox_inventory:currentWeapon')
 	end
+
+	-- if currentWeapon then
+	-- 	local ammo = currentWeapon.ammo and GetAmmoInPedWeapon(cache.ped, currentWeapon.hash)
+	-- 	SetPedAmmo(cache.ped, currentWeapon.hash, 0)
+
+	-- 	if not newSlot then
+	-- 		ClearPedSecondaryTask(cache.ped)
+	-- 		local sleep = (client.hasGroup(shared.police) and (GetWeapontypeGroup(currentWeapon.hash) == 416676503 or GetWeapontypeGroup(currentWeapon.hash) == 690389602)) and 450 or 1400
+	-- 		local coords = GetEntityCoords(cache.ped, true)
+	-- 		if currentWeapon.hash == `WEAPON_SWITCHBLADE` then
+	-- 			Utils.PlayAnimAdvanced(sleep, 'anim@melee@switchblade@holster', 'holster', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(cache.ped), 8.0, 3.0, -1, 48, 0)
+	-- 			Wait(600)
+	-- 		else
+	-- 			Utils.PlayAnimAdvanced(sleep, (sleep == 450 and 'reaction@intimidation@cop@unarmed' or 'reaction@intimidation@1h'), 'outro', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(cache.ped), 8.0, 3.0, -1, 50, 0)
+	-- 			Wait(sleep)
+	-- 		end
+	-- 		Utils.ItemNotify({currentWeapon.label, currentWeapon.name, shared.locale('holstered')})
+	-- 	end
+
+	-- 	RemoveAllPedWeapons(cache.ped, true)
+
+	-- 	if newSlot then
+	-- 		TriggerServerEvent('ox_inventory:updateWeapon', ammo and 'ammo' or 'melee', ammo or currentWeapon.melee, newSlot)
+	-- 	end
+
+	-- 	currentWeapon = nil
+	-- 	TriggerEvent('ox_inventory:currentWeapon')
+	-- end
+end
+
+function Utils.GiveWeaponToPed(weaponName, ammoCount, bForceInHand,bForceInHolster)
+	local state = Citizen.InvokeNative(0x5E3BDDBCB83F3D84, cache.ped, weaponName, ammoCount, bForceInHand, bForceInHolster)
+
+	return state
+end
+
+function Utils.RemoveAllPedWeapons(ped)
+	Citizen.InvokeNative(0xA44CE817, ped, true)
+end
+
+function Utils.GetWeaponHash(ped)
+	local _, weaponHash = GetCurrentPedWeapon(ped)
+
+	return weaponHash
+end
+
+function Utils.RemovePedCurrentWeapon(ped)
+	local _, weaponHash = GetCurrentPedWeapon(ped)
+
+	if weaponHash then
+		RemoveWeaponFromPed(ped, weaponHash)
+	end
 end
 
 function Utils.ClearWeapons(currentWeapon)
 	currentWeapon = Utils.Disarm(currentWeapon)
-	RemoveAllPedWeapons(cache.ped, true)
+	-- RemoveAllPedWeapons(cache.ped, true)
+
+	Utils.RemoveAllPedWeapons(cache.ped)
+	Utils.RemovePedCurrentWeapon(cache.ped)
+	
 	if client.parachute then
 		local chute = `GADGET_PARACHUTE`
 		GiveWeaponToPed(cache.ped, chute, 0, true, false)

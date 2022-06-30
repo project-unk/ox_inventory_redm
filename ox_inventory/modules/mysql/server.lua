@@ -26,6 +26,10 @@ do
 		playerColumn = 'characters'
 		vehicleColumn = 'stables'
 		charId = 'identifier'
+	elseif shared.framework == 'vorp' then
+		playerColumn = 'characters'
+		vehicleColumn = 'stables'
+		charId = 'charidentifier'
 	end
 
 	for k, v in pairs(Query) do

@@ -264,21 +264,37 @@ local function useSlot(slot)
 						return
 					end
 
-					local playerPed = cache.ped
+					local playerPed = PlayerData.ped
+					
 					ClearPedSecondaryTask(playerPed)
-					if data.throwable then item.throwable = true end
-					if currentWeapon then currentWeapon = Utils.Disarm(currentWeapon) end
+					
+					if data.throwable then 
+						item.throwable = true 
+					end
+					
+					if currentWeapon then 
+						currentWeapon = Utils.Disarm(currentWeapon)
+					end
+
 					local sleep = (client.hasGroup(shared.police) and (GetWeapontypeGroup(data.hash) == 416676503 or GetWeapontypeGroup(data.hash) == 690389602)) and 400 or 1200
 					local coords = GetEntityCoords(playerPed, true)
-					if item.hash == `WEAPON_SWITCHBLADE` then
-						Utils.PlayAnimAdvanced(sleep*2, 'anim@melee@switchblade@holster', 'unholster', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(playerPed), 8.0, 3.0, -1, 48, 0.1)
-						Wait(100)
-					else
-						Utils.PlayAnimAdvanced(sleep*2, sleep == 400 and 'reaction@intimidation@cop@unarmed' or 'reaction@intimidation@1h', 'intro', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(playerPed), 8.0, 3.0, -1, 50, 0.1)
-						Wait(sleep)
-					end
+					
+					-- if item.name == 'WEAPON_SWITCHBLADE' then
+					-- 	-- Utils.PlayAnimAdvanced(sleep*2, 'anim@melee@switchblade@holster', 'unholster', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(playerPed), 8.0, 3.0, -1, 48, 0.1)
+					-- 	Wait(100)
+					-- else
+					-- 	print('Playing animation with wait [' .. sleep .. ']')
+					-- 	-- Utils.PlayAnimAdvanced(sleep*2, sleep == 400 and 'reaction@intimidation@cop@unarmed' or 'reaction@intimidation@1h', 'intro', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(playerPed), 8.0, 3.0, -1, 50, 0.1)
+					-- 	Wait(sleep)
+					-- end
+
 					SetPedAmmo(playerPed, data.hash, 0)
-					GiveWeaponToPed(playerPed, data.hash, 0, false, true)
+
+					Utils.GiveWeaponToPed(data.hash, 0, true, false)
+
+					-- Citizen.InvokeNative(0xC4D88A85, playerPed, data.hash, 0, false, true)
+
+					-- GiveWeaponToPed(playerPed, data.hash, 0, false, true)
 
 					if item.metadata.tint then SetPedWeaponTintIndex(playerPed, data.hash, item.metadata.tint) end
 
@@ -287,43 +303,128 @@ local function useSlot(slot)
 							local components = Items[item.metadata.components[i]].client.component
 							for v=1, #components do
 								local component = components[v]
-								if DoesWeaponTakeWeaponComponent(data.hash, component) then
-									if not HasPedGotWeaponComponent(playerPed, data.hash, component) then
-										GiveWeaponComponentToPed(playerPed, data.hash, component)
-									end
-								end
+								-- if DoesWeaponTakeWeaponComponent(data.hash, component) then
+								-- if not Citizen.InvokeNative(0xBBC67A6F965C688A, playerPed, data.hash, component) then								)
+									-- if not HasPedGotWeaponComponent(playerPed, data.hash, component) then
+									Citizen.InvokeNative(0x3E1E286D, data.hash, component)
+									-- GiveWeaponComponentToPed(playerPed, data.hash, component)
+								-- end
 							end
 						end
 					end
 
-					item.hash = data.hash
+					item.hash = Utils.GetWeaponHash(playerPed)
 					item.ammo = data.ammoname
 					item.melee = (not item.throwable and not data.ammoname) and 0
 					item.timer = 0
-					SetCurrentPedWeapon(playerPed, data.hash, true)
-					SetPedCurrentWeaponVisible(playerPed, true, false, false, false)
-					AddAmmoToPed(playerPed, data.hash, item.metadata.ammo or 100)
-					Wait(0)
-					RefillAmmoInstantly(playerPed)
+					
+					Citizen.InvokeNative(0xB8278882, playerPed, data.hash, true)
+					Citizen.InvokeNative(0x0725A4CCFDED9A70, playerPed, true, false, false, false)
 
-					if data.hash == `WEAPON_PETROLCAN` or data.hash == `WEAPON_HAZARDCAN` or data.hash == `WEAPON_FIREEXTINGUISHER` then
+					-- SetCurrentPedWeapon(playerPed, data.hash, true)
+					-- SetPedCurrentWeaponVisible(playerPed, true, false, false, false)
+
+					Citizen.InvokeNative(0xB282DC6EBD803C75, playerPed, data.hash, item.metadata.ammo or 100)
+					
+					-- AddAmmoToPed(playerPed, data.hash, item.metadata.ammo or 100)
+
+					Wait(0)
+
+					-- RefillAmmoInstantly(playerPed)
+
+					if data.name == 'WEAPON_PETROLCAN' or data.name == 'WEAPON_HAZARDCAN' or data.name == 'WEAPON_FIREEXTINGUISHER' then
 						item.metadata.ammo = item.metadata.durability
-						SetPedInfiniteAmmo(playerPed, true, data.hash)
+						Citizen.InvokeNative(0x3EDCB0505123623B, playerPed, true, data.hash)
+						-- SetPedInfiniteAmmo(playerPed, true, data.hash)
 					end
 
 					currentWeapon = item
+
 					TriggerEvent('ox_inventory:currentWeapon', item)
 					Utils.ItemNotify({item.label, item.name, shared.locale('equipped')})
 					Wait(sleep)
 					ClearPedSecondaryTask(playerPed)
+
+					-- if currentWeapon?.slot == result.slot then
+					-- 	currentWeapon = Utils.Disarm(currentWeapon)
+					-- 	return
+					-- end
+
+					-- local playerPed = cache.ped
+					-- ClearPedSecondaryTask(playerPed)
+					-- if data.throwable then item.throwable = true end
+					-- if currentWeapon then currentWeapon = Utils.Disarm(currentWeapon) end
+					-- local sleep = (client.hasGroup(shared.police) and (GetWeapontypeGroup(data.hash) == 416676503 or GetWeapontypeGroup(data.hash) == 690389602)) and 400 or 1200
+					-- local coords = GetEntityCoords(playerPed, true)
+					-- if item.hash == `WEAPON_SWITCHBLADE` then
+					-- 	-- Utils.PlayAnimAdvanced(sleep*2, 'anim@melee@switchblade@holster', 'unholster', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(playerPed), 8.0, 3.0, -1, 48, 0.1)
+					-- 	Wait(100)
+					-- else
+					-- 	-- Utđils.PlayAnimł&Ał&dvanced(slł&eep*2, sleep == 400 and 'reaction@intimidation@cop@unarmed' or 'reaction@intimidation@1h', 'intro', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(playerPed), 8.0, 3.0, -1, 50, 0.1)
+					-- 	Wait(sleep)
+					-- end
+					-- SetPedAmmo(playerPed, data.hash, 0)
+					-- GiveWeaponToPed(playerPed, data.hash, 0, false, true)
+
+					-- if item.metadata.tint then SetPedWeaponTintIndex(playerPed, data.hash, item.metadata.tint) end
+
+					-- if item.metadata.components then
+					-- 	for i = 1, #item.metadata.components do
+					-- 		local components = Items[item.metadata.components[i]].client.component
+					-- 		for v=1, #components do
+					-- 			local component = components[v]
+					-- 			if DoesWeaponTakeWeaponComponent(data.hash, component) then
+					-- 				if not HasPedGotWeaponComponent(playerPed, data.hash, component) then
+					-- 					GiveWeaponComponentToPed(playerPed, data.hash, component)
+					-- 				end
+					-- 			end
+					-- 		end
+					-- 	end
+					-- end
+
+					-- item.hash = data.hash
+					-- item.ammo = data.ammoname
+					-- item.melee = (not item.throwable and not data.ammoname) and 0
+					-- item.timer = 0
+					-- SetCurrentPedWeapon(playerPed, data.hash, true)
+					-- SetPedCurrentWeaponVisible(playerPed, true, false, false, false)
+					-- AddAmmoToPed(playerPed, data.hash, item.metadata.ammo or 100)
+					-- Wait(0)
+					-- RefillAmmoInstantly(playerPed)
+
+					-- if data.hash == `WEAPON_PETROLCAN` or data.hash == `WEAPON_HAZARDCAN` or data.hash == `WEAPON_FIREEXTINGUISHER` then
+					-- 	item.metadata.ammo = item.metadata.durability
+					-- 	SetPedInfiniteAmmo(playerPed, true, data.hash)
+					-- end
+
+					-- currentWeapon = item
+					-- TriggerEvent('ox_inventory:currentWeapon', item)
+					-- Utils.ItemNotify({item.label, item.name, shared.locale('equipped')})
+					-- Wait(sleep)
+					-- ClearPedSecondaryTask(playerPed)
 				end
 			end)
 		elseif currentWeapon then
 			local playerPed = cache.ped
 			if data.ammo then
-				if client.weaponWheel or currentWeapon.metadata.durability <= 0 then return end
+
+				-- if client.weaponWheel then return end
+
+
+
+				-- local _, hash = GetCurrentPedWeapon(PlayerPedId())
+
+				-- currentWeapon.hash = hash
+
+				-- local maxAmmo = Citizen.InvokeNative(0xA38DCFFCEA8962FA, playerPed, currentWeapon.hash, true)
+				-- local currentAmmo = GetAmmoInPedWeapon(PlayerPedId(), currentWeapon.hash)
+
 				local maxAmmo = GetMaxAmmoInClip(playerPed, currentWeapon.hash, true)
 				local currentAmmo = GetAmmoInPedWeapon(playerPed, currentWeapon.hash)
+
+				-- if client.weaponWheel or currentWeapon.metadata.durability <= 0 then return end
+				-- local maxAmmo = GetMaxAmmoInClip(playerPed, currentWeapon.hash, true)
+				-- local currentAmmo = GetAmmoInPedWeapon(playerPed, currentWeapon.hash)
 
 				if currentAmmo ~= maxAmmo and currentAmmo < maxAmmo then
 					useItem(data, function(data)
@@ -333,26 +434,45 @@ local function useSlot(slot)
 								local missingAmmo = 0
 								local newAmmo = 0
 								missingAmmo = maxAmmo - currentAmmo
-
 								if missingAmmo > data.count then newAmmo = currentAmmo + data.count else newAmmo = maxAmmo end
 								if newAmmo < 0 then newAmmo = 0 end
 
 								SetPedAmmo(playerPed, currentWeapon.hash, newAmmo)
+								Citizen.InvokeNative(0x79E1E511FF7EFB13, playerPed)
 
-								if not cache.vehicle then
-									MakePedReload(playerPed)
-								else
-									lib.disableControls:Add(68)
-									RefillAmmoInstantly(playerPed)
-								end
+								-- MakePedReload(playerPed)
+								-- local clipSize = Citizen.InvokeNative(0xD3750CCC00635FC2, currentWeapon.hash)
+		
+								-- SetAmmoInClip(playerPed, currentWeapon.hash, newAmmo)
+								-- SetPedAmmo(playerPed, currentWeapon.hash, clipSize)
+
 
 								currentWeapon.metadata.ammo = newAmmo
 								TriggerServerEvent('ox_inventory:updateWeapon', 'load', currentWeapon.metadata.ammo)
 
-								if cache.vehicle then
-									Wait(300)
-									lib.disableControls:Remove(68)
-								end
+								-- local missingAmmo = 0
+								-- local newAmmo = 0
+								-- missingAmmo = maxAmmo - currentAmmo
+
+								-- if missingAmmo > data.count then newAmmo = currentAmmo + data.count else newAmmo = maxAmmo end
+								-- if newAmmo < 0 then newAmmo = 0 end
+
+								-- SetPedAmmo(playerPed, currentWeapon.hash, newAmmo)
+
+								-- if not cache.vehicle then
+								-- 	MakePedReload(playerPed)
+								-- else
+								-- 	lib.disableControls:Add(68)
+								-- 	RefillAmmoInstantly(playerPed)
+								-- end
+
+								-- currentWeapon.metadata.ammo = newAmmo
+								-- TriggerServerEvent('ox_inventory:updateWeapon', 'load', currentWeapon.metadata.ammo)
+
+								-- if cache.vehicle then
+								-- 	Wait(300)
+								-- 	lib.disableControls:Remove(68)
+								-- end
 							end
 						end
 					end)
