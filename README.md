@@ -1,5 +1,7 @@
 # project_unk - ox_inventory [Redm]
 * Fork of ox_inventory, that could be used for RedM
 
-* Currently support REDEM:RP.
-* Like to contribute or just stay with news & updates? -> [https://discord.gg/9X6UBqGQXy](https://discord.gg/3jXvbM8VWy)
+* Currently supporting these Frameworks:
+- QBR (require these changes -> https://gist.github.com/NewEditOfficial/7334dcd945d461a97419f03192947777)
+- REDEM_RP -> WIP
+- VORP -> missing saving of inventory when player exit / leave [WIP]
