@@ -15,9 +15,7 @@ do
 	if shared.framework == 'ox' then
 		playerColumn = 'characters'
 		vehicleColumn = 'vehicles'
-	elseif shared.framework == 'esx' then
-		playerColumn = 'users'
-		vehicleColumn = 'owned_vehicles'
+		charId = 'charid'
 	elseif shared.framework == 'qbr' then
 		playerColumn = 'players'
 		vehicleColumn = 'player_vehicles'
