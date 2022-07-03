@@ -5,3 +5,4 @@
 - QBR (require these changes -> https://gist.github.com/NewEditOfficial/7334dcd945d461a97419f03192947777)
 - REDEM_RP -> WIP
 - VORP -> missing saving of inventory when player exit / leave [WIP]
+- Our ox_core fork -> Done
